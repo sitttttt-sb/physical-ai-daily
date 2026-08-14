@@ -1,0 +1,42 @@
+{
+  "date": "2026-08-14",
+  "title": "次世代ヒューマノイドの産業導入と日本の自律移動ロボット新規制",
+  "aiInsight": "【2026-08-14版】本日のフィジカルAI分野では、海外でのヒューマノイドロボット量産現場投入が加速する一方、日本では高度協調ロボットおよび公道・商業施設での自律走行ガイドライン改定が注目されています。",
+  "highlights": {
+    "japanCount": 3,
+    "globalCount": 4,
+    "keyTopic": "テスラOptimus新モデル量産と国内工場におけるAIロボット協調運用"
+  },
+  "japanNews": [
+    {
+      "id": "jp-2026-08-14-001",
+      "title": "安川電機、視覚と言語を統合した次世代AI協調ロボット『Motoman-AI』を発表",
+      "summary": "マルチモーダルAIを標準搭載し、教示作業不要で不定形なワークのピック＆プレースを実行する新ロボットアームを発表。",
+      "region": "japan",
+      "category": "Industrial",
+      "sourceName": "日経ロボティクス",
+      "sourceUrl": "https://example.com/japan-ai-robot",
+      "publishedAt": "2026-08-14",
+      "keyTakeaways": [
+        "自然言語指示での操作を実現",
+        "教示時間を9割削減"
+      ]
+    }
+  ],
+  "globalNews": [
+    {
+      "id": "gl-2026-08-14-001",
+      "title": "Tesla Optimus Gen 3、フリーモント工場での組み立てラインに本格配備",
+      "summary": "汎用ヒューマノイドOptimus Gen 3が、自動車工場内で24時間シフトでの部品搬送および高精度組み付け作業を開始。",
+      "region": "global",
+      "category": "Humanoid",
+      "sourceName": "TechCrunch",
+      "sourceUrl": "https://example.com/tesla-optimus",
+      "publishedAt": "2026-08-14",
+      "keyTakeaways": [
+        "人間と同等の作業ペースを達成",
+        "年内1万台稼働を目標"
+      ]
+    }
+  ]
+}

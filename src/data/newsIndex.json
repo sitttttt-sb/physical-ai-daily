@@ -1,0 +1,16 @@
+[
+  {
+    "date": "2026-08-14",
+    "title": "次世代ヒューマノイドの産業導入と日本の自律移動ロボット新規制",
+    "keyTopic": "テスラOptimus新モデル量産と国内工場におけるAIロボット協調運用",
+    "japanCount": 1,
+    "globalCount": 1
+  },
+  {
+    "date": "2026-08-13",
+    "title": "空間知能（Spatial AI）モデルの進化と物理基盤モデルの台頭",
+    "keyTopic": "World Simulatorによるロボットのゼロショット学習と国内物流AIの実証実験",
+    "japanCount": 2,
+    "globalCount": 3
+  }
+]

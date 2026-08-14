@@ -1,0 +1,58 @@
+name: Daily Physical AI News Update & Deploy
+
+on:
+  schedule:
+    # 毎日 UTC 0:00 (JST 朝9:00) に自動実行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 手動実行トリガー
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Generate News via AI
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/generate_news.py
+
+      - name: Commit Updated News Data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add src/data/
+          git status
+          git diff-index --quiet HEAD || git commit -m "auto: update daily physical AI news [skip ci]"
+          git push origin main || echo "No changes to push"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Build Vite React App
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
