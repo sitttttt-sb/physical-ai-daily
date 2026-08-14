@@ -29,11 +29,21 @@ export interface NewsItem {
   keyTakeaways: string[];
 }
 
+// 日刊の動向サマリー
+export interface DailySummary {
+  overview: string;          // その日の全体的なフィジカルAI動向の総括（3-4文）
+  japanAnalysis: string;     // 日本市場の分析コメント（2-3文）
+  globalAnalysis: string;    // 世界市場の分析コメント（2-3文）
+  trendKeywords: string[];   // トレンドキーワード（5つ程度）
+  outlook: string;           // 今後の展望（1-2文）
+}
+
 // 1日分のニュースデータ構造
 export interface DailyNewsData {
   date: string; // YYYY-MM-DD
   title: string;
   aiInsight: string; // AIによるその日の総合考察
+  dailySummary?: DailySummary; // 本日の動向サマリー
   highlights: {
     japanCount: number;
     globalCount: number;

@@ -45,8 +45,8 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
             fontWeight: 700,
             fontSize: '0.85rem',
             transition: 'all 0.2s ease',
-            backgroundColor: activeTab === 'all' ? 'var(--text-main)' : 'transparent',
-            color: activeTab === 'all' ? '#ffffff' : 'var(--text-muted)'
+            backgroundColor: activeTab === 'all' ? '#e8eaed' : 'transparent',
+            color: activeTab === 'all' ? '#0f1419' : 'var(--text-muted)'
           }}
         >
           すべてのニュース ({totalCount})

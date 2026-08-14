@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ currentDate, onNavigateHome }) =
       top: 0,
       zIndex: 100,
       backdropFilter: 'blur(8px)',
-      background: 'rgba(255, 255, 255, 0.95)'
+      background: 'rgba(15, 20, 25, 0.95)'
     }}>
       <div className="container" style={{
         display: 'flex',

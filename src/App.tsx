@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { SummaryHero } from './components/SummaryHero';
+import { DailySummary } from './components/DailySummary';
 import { FilterTabs } from './components/FilterTabs';
 import type { FilterRegion } from './components/FilterTabs';
 import { NewsCard } from './components/NewsCard';
@@ -35,6 +36,11 @@ export const App: React.FC = () => {
       <main className="container" style={{ flex: 1 }}>
         {/* サマリーヒーローエリア */}
         <SummaryHero data={currentNews} />
+
+        {/* 日刊動向まとめ */}
+        {currentNews.dailySummary && (
+          <DailySummary summary={currentNews.dailySummary} />
+        )}
 
         {/* フィルタリングタブ */}
         <FilterTabs
