@@ -1,6 +1,8 @@
 name: Daily Physical AI News Update & Deploy
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     # 毎日 UTC 0:00 (JST 朝9:00) に自動実行
     - cron: '0 0 * * *'
