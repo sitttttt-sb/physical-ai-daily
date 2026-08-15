@@ -3,6 +3,8 @@ name: Daily Physical AI News Update & Deploy
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
   schedule:
     # 毎日 UTC 0:00 (JST 朝9:00) に自動実行
     - cron: '0 0 * * *'
@@ -13,10 +15,15 @@ permissions:
   pages: write
   id-token: write
 
-jobs:
-  generate-and-deploy:
-    runs-on: ubuntu-latest
+concurrency:
+  group: deploy
+  cancel-in-progress: true
 
+jobs:
+  generate-news:
+    # スケジュール実行 or 手動実行の場合のみ、ニュース生成を行う
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -32,14 +39,25 @@ jobs:
         run: |
           python scripts/generate_news.py
 
-      - name: Commit Updated News Data
+      - name: Commit & Push Updated News Data
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
           git add src/data/
           git status
-          git diff-index --quiet HEAD || git commit -m "auto: update daily physical AI news [skip ci]"
+          git diff-index --quiet HEAD || git commit -m "auto: update daily physical AI news"
           git push origin main || echo "No changes to push"
+
+  build-and-deploy:
+    # push イベント or ニュース生成ジョブの完了後に実行
+    if: always() && (github.event_name == 'push' || needs.generate-news.result == 'success')
+    needs: [generate-news]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

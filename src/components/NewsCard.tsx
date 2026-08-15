@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Tag, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Tag, CheckCircle2, CalendarDays } from 'lucide-react';
 import type { NewsItem } from '../types/news';
 
 interface NewsCardProps {
@@ -121,17 +121,23 @@ export const NewsCard: React.FC<NewsCardProps> = ({ item }) => {
         )}
       </div>
 
-      {/* フッター: ソース情報 & 元リンク */}
+      {/* フッター: 日付・ソース情報 & 元リンク */}
       <div style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        gap: '0.6rem',
         paddingTop: '0.85rem',
         borderTop: '1px solid var(--border-color)',
         fontSize: '0.8rem',
         color: 'var(--text-light)'
       }}>
-        <span>情報元: <strong style={{ color: 'var(--text-muted)' }}>{item.sourceName}</strong></span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <CalendarDays size={13} color="var(--text-light)" />
+            <span>{item.publishedAt}</span>
+          </div>
+          <span>情報元: <strong style={{ color: 'var(--text-muted)' }}>{item.sourceName}</strong></span>
+        </div>
         <a
           href={item.sourceUrl}
           target="_blank"
@@ -139,14 +145,19 @@ export const NewsCard: React.FC<NewsCardProps> = ({ item }) => {
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.3rem',
+            justifyContent: 'center',
+            gap: '0.4rem',
+            padding: '0.5rem 1rem',
+            borderRadius: 'var(--radius-md)',
+            backgroundColor: 'var(--accent-blue-light)',
             color: 'var(--accent-blue)',
-            fontWeight: 600,
-            transition: 'opacity 0.2s ease'
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            transition: 'all 0.2s ease'
           }}
         >
-          <span>元記事を読む</span>
-          <ExternalLink size={13} />
+          <span>元の記事を読む</span>
+          <ExternalLink size={14} />
         </a>
       </div>
     </article>

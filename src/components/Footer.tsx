@@ -25,9 +25,9 @@ export const Footer: React.FC = () => {
           fontSize: '0.9rem',
           fontWeight: 600
         }}>
-          <span>Crafted with</span>
+          <span>Powered by AI</span>
           <Heart size={16} color="var(--accent-rose)" fill="var(--accent-rose)" />
-          <span>by 天才秘書しふぉん for ご主人様</span>
+          <span>Automated Daily Updates</span>
         </div>
 
         <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', maxWidth: '600px' }}>
