@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
           marginTop: '0.5rem'
         }}>
           <a
-            href="https://github.com"
+            href="https://github.com/sitttttt-sb/physical-ai-daily"
             target="_blank"
             rel="noopener noreferrer"
             style={{

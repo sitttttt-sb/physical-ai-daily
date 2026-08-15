@@ -99,7 +99,7 @@ export const SummaryHero: React.FC<SummaryHeroProps> = ({ data }) => {
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--accent-teal)', fontWeight: 'bold' }}>🇯🇵 日本のトピックス</div>
               <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--accent-teal)' }}>
-                {data.highlights.japanCount} ニュース掲載
+                {data.japanNews?.length || 0} ニュース掲載
               </div>
             </div>
           </div>
@@ -116,10 +116,34 @@ export const SummaryHero: React.FC<SummaryHeroProps> = ({ data }) => {
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--accent-blue)', fontWeight: 'bold' }}>🌐 世界の動向</div>
               <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--accent-blue)' }}>
-                {data.highlights.globalCount} ニュース掲載
+                {data.globalNews?.length || 0} ニュース掲載
               </div>
             </div>
           </div>
+
+          {/* トレンドキーワード */}
+          {data.dailySummary?.trendKeywords && data.dailySummary.trendKeywords.length > 0 && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '0.75rem 1rem',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-md)'
+            }}>
+              <div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold', marginBottom: '0.25rem' }}>注目のキーワード</div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {data.dailySummary.trendKeywords.slice(0, 3).map((keyword, i) => (
+                    <span key={i} style={{ fontSize: '0.8rem', padding: '0.1rem 0.5rem', backgroundColor: 'var(--bg-subtle)', borderRadius: 'var(--radius-full)', color: 'var(--text-main)' }}>
+                      #{keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

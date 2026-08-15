@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Header } from './components/Header';
 import { SummaryHero } from './components/SummaryHero';
 import { DailySummary } from './components/DailySummary';
+import { TrendAnalysisSection } from './components/TrendAnalysis';
 import { FilterTabs } from './components/FilterTabs';
 import type { FilterRegion } from './components/FilterTabs';
 import { NewsCard } from './components/NewsCard';
@@ -10,17 +11,41 @@ import { Footer } from './components/Footer';
 
 // データ読み込み
 import newsIndexData from './data/newsIndex.json';
-import defaultNewsData from './data/news/2026-08-14.json';
-
 import type { DailyNewsData, NewsIndexItem } from './types/news';
+
+// Viteのimport.meta.globで動的にJSONをロード
+const newsModules = import.meta.glob('./data/news/*.json', { eager: true });
 
 export const App: React.FC = () => {
   const archives = newsIndexData as NewsIndexItem[];
-  const [selectedDate, setSelectedDate] = useState<string>('2026-08-14');
+  
+  // 初期値はnewsIndexDataの先頭（最新日付）
+  const initialDate = archives.length > 0 ? archives[0].date : '';
+  const [selectedDate, setSelectedDate] = useState<string>(initialDate);
   const [activeTab, setActiveTab] = useState<FilterRegion>('all');
 
-  // 本来は日付選択で動的にJSONインポートしますが、デモでは最新データを表示
-  const currentNews: DailyNewsData = defaultNewsData as DailyNewsData;
+  // 選択された日付のデータを取得
+  const currentNews = useMemo(() => {
+    const key = `./data/news/${selectedDate}.json`;
+    if (newsModules[key]) {
+      const module = newsModules[key] as any;
+      return (module.default || module) as DailyNewsData;
+    }
+    return null;
+  }, [selectedDate]);
+
+  // データが存在しない場合のフォールバック表示
+  if (!currentNews) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Header currentDate={selectedDate} onNavigateHome={() => setSelectedDate(initialDate)} />
+        <main className="container" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ color: 'var(--text-muted)' }}>データが見つかりません: {selectedDate}</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   // 表示するニュースをフィルタリング
   const displayedJapanNews = activeTab === 'global' ? [] : currentNews.japanNews;
@@ -30,7 +55,7 @@ export const App: React.FC = () => {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header
         currentDate={selectedDate}
-        onNavigateHome={() => setSelectedDate('2026-08-14')}
+        onNavigateHome={() => setSelectedDate(initialDate)}
       />
 
       <main className="container" style={{ flex: 1 }}>
@@ -40,6 +65,11 @@ export const App: React.FC = () => {
         {/* 日刊動向まとめ */}
         {currentNews.dailySummary && (
           <DailySummary summary={currentNews.dailySummary} />
+        )}
+
+        {/* トレンド分析 */}
+        {currentNews.trendAnalysis && (
+          <TrendAnalysisSection analysis={currentNews.trendAnalysis} />
         )}
 
         {/* フィルタリングタブ */}
